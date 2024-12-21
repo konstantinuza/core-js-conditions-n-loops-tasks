@@ -21,8 +21,14 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  let result;
+  if (number >= 0) {
+    result = true;
+  } else {
+    result = false;
+  }
+  return result;
 }
 
 /**
@@ -38,13 +44,18 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  const numbers = [a, b, c];
+  let result = -Infinity;
+  for (let i = 0; i < numbers.length; i += 1) {
+    if (result < numbers[i]) result = numbers[i];
+  }
+  return result;
 }
 
 /**
  * Checks if a queen can capture a king in the next move on an 8x8 chessboard.
- * See more details at https://en.wikipedia.org/wiki/Queen_(chess)
+ * See more details at яё
  *
  * @typedef {{
  *  x: number,
@@ -60,8 +71,16 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  let result = false;
+  if (queen.x === king.x || queen.y === king.y) {
+    result = true;
+  } else if (queen.x === queen.y && king.x === king.y) {
+    result = true;
+  } else if (queen.x + queen.y === king.x + king.y) {
+    result = true;
+  }
+  return result;
 }
 
 /**
