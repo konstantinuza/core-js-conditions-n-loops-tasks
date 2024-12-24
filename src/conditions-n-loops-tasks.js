@@ -175,7 +175,6 @@ function convertNumberToString(numberStr) {
       case '-':
         result += 'minus';
         break;
-
       case ',':
       case '.':
         result += 'point';
@@ -287,8 +286,24 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  if (arr.length < 3) return -1;
+  for (let i = 0; i < arr.length - 2; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+
+    for (let j = 0; j < 1 + i; j += 1) {
+      leftSum += arr[j];
+    }
+
+    for (let k = i + 2; k < arr.length; k += 1) {
+      rightSum += arr[k];
+    }
+
+    if (leftSum === rightSum) return i + 1;
+  }
+
+  return -1;
 }
 
 /**
@@ -312,8 +327,57 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const spiralMatrix = [];
+  let y = 0;
+  let x = 0;
+  const up = () => {
+    y -= 1;
+  };
+  const right = () => {
+    x += 1;
+  };
+  const down = () => {
+    y += 1;
+  };
+  const left = () => {
+    x -= 1;
+  };
+  const directionList = [up, right, down, left];
+  let directionIndex = 1;
+  let quantSteps = size - 1;
+  let countSteps = quantSteps;
+  let countLines = null;
+
+  for (let i = 0; i < size; i += 1) {
+    spiralMatrix[i] = [];
+  }
+  for (let j = 1; j <= size ** 2; j += 1) {
+    if (j === size) {
+      directionIndex += 1;
+      countLines = 2;
+    }
+    spiralMatrix[y][x] = j;
+    directionList[directionIndex]();
+
+    if (countLines !== null) {
+      countSteps -= 1;
+      if (countSteps === 0) {
+        countLines -= 1;
+        if (countLines === 0) {
+          countLines = 2;
+          quantSteps -= 1;
+        }
+        countSteps = quantSteps;
+        if (directionIndex === 3) {
+          directionIndex = 0;
+        } else {
+          directionIndex += 1;
+        }
+      }
+    }
+  }
+  return spiralMatrix;
 }
 
 /**
@@ -331,8 +395,29 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const newMatrix = matrix;
+  const matrixRotate = [];
+  let columnIndex = matrix.length - 1;
+
+  for (let i = 0; i < matrix.length; i += 1) {
+    matrixRotate[i] = [];
+  }
+
+  for (let j = 0; j < matrix.length; j += 1) {
+    for (let k = 0; k < matrix.length; k += 1) {
+      matrixRotate[k][columnIndex] = matrix[j][k];
+    }
+    columnIndex -= 1;
+  }
+
+  for (let j = 0; j < matrix.length; j += 1) {
+    for (let k = 0; k < matrix.length; k += 1) {
+      newMatrix[j][k] = matrixRotate[j][k];
+    }
+  }
+
+  return newMatrix;
 }
 
 /**
